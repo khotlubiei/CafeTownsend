@@ -1,0 +1,41 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="test suite">
+
+    <test name="Logout">
+        <classes>
+            <class name="CafeTownsend.Tests">
+                <methods>
+                    <include name="logIn"/>
+                    <include name="logOut"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="AddEmployee">
+        <classes>
+            <class name="CafeTownsend.Tests">
+                <methods>
+                    <include name="logIn"/>
+                    <include name="addEmployee"/>
+                    <include name="deleteEmployee"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Edit">
+        <classes>
+            <class name="CafeTownsend.Tests">
+                <methods>
+                    <include name="logIn"/>
+                    <include name="addEmployee"/>
+                    <include name="editEmployeeDetails"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+
+
+</suite>
