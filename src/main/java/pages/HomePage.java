@@ -48,53 +48,32 @@ public class HomePage extends BasePage {
         return PageFactory.initElements(driver, HomePage.class);
     }
 
-    public HomePage createUser (String fName,String lName, String sDate, String email) {
+    public CRUDPage createUser () {
         clickOn(createButton);
-        typeText(CRUDPage.fNameInput, fName);
-        typeText(CRUDPage.lNameInput, lName);
-        typeText(CRUDPage.startDateInput, sDate);
-        typeText(CRUDPage.emailInput, email);
-        submitForm(CRUDPage.submitButton);
-        return PageFactory.initElements(driver, HomePage.class);
+        return PageFactory.initElements(driver, CRUDPage.class);
     }
 
-    private By employeeCardLocator (String fName,String lName) {
+    private static By employeeCardLocator(String fName, String lName) {
         return By.xpath("//li[contains(text(), '"+fName+" "+lName+"')]");
     }
 
     public Boolean isEmployeePresented (String fName,String lName) {
-        return myElement(employeeCardLocator (fName, lName)).isDisplayed();
+        return isElementPresented(employeeCardLocator (fName, lName));
     }
 
-    public HomePage editUser (String fName,String lName, String fNameToUpdate,String lNameToUpdate, String sDateToUpdate, String emailToUpdate) {
+    public CRUDPage editUser (String fName,String lName) {
         By employeeCard = employeeCardLocator(fName, lName);
         waitForElement(By.xpath("//*[@id='employee-list']/li"));
         clickOn(employeeCard);
         clickOn(editButton);
-        typeText(CRUDPage.fNameInput, fNameToUpdate);
-        typeText(CRUDPage.lNameInput, lNameToUpdate);
-        typeText(CRUDPage.startDateInput, sDateToUpdate);
-        typeText(CRUDPage.emailInput, emailToUpdate);
-        submitForm(CRUDPage.submitButton);
-        return PageFactory.initElements(driver, HomePage.class);
-
+        return PageFactory.initElements(driver, CRUDPage.class);
     }
 
-    public Boolean assertEmployeeData (String fName,String lName, String sDate, String email){
+    public static CRUDPage openUser(String fName, String lName) {
         By employeeCard = employeeCardLocator(fName, lName);
         waitForElement(By.xpath("//*[@id='employee-list']/li"));
         doubleClick(employeeCard);
-        if (
-                myElement(CRUDPage.fNameInput).getText().equals(fName)
-                        && myElement(CRUDPage.lNameInput).getText().equals(lName)
-                        && myElement(CRUDPage.startDateInput).getText().equals(sDate)
-                        && myElement(CRUDPage.emailInput).getText().equals(email)
-            )
-        {return true;}
-        else
-        {return false;}
-
+        return PageFactory.initElements(driver, CRUDPage.class);
     }
-
 
 }

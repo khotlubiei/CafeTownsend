@@ -30,14 +30,15 @@ public class BaseTest {
         protected void initDriver() {
             loadProperties();
             WebDriverManager.chromedriver().setup();
+
             if (driver == null) {
                 driver = new ChromeDriver();
             }
 
             driver.manage().timeouts()
-                    .setScriptTimeout(30, TimeUnit.SECONDS)
-                    .pageLoadTimeout(30, TimeUnit.SECONDS)
-                    .implicitlyWait(30, TimeUnit.SECONDS);
+                    .setScriptTimeout(10, TimeUnit.SECONDS)
+                    .pageLoadTimeout(10, TimeUnit.SECONDS)
+                    .implicitlyWait(10, TimeUnit.SECONDS);
         }
 
         @AfterSuite

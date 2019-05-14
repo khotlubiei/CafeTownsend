@@ -1,14 +1,17 @@
 package CafeTownsend;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
+import pages.CRUDPage;
 import pages.LoginPage;
 import utils.BaseTest;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+import static pages.CRUDPage.*;
+import static pages.HomePage.openUser;
+
 import pages.HomePage;
 
 
@@ -33,21 +36,24 @@ public class Tests extends BaseTest {
 
     @Test
     public void addEmployee () {
-        homePage = homePage.createUser(EMPLOYEE_FNAME,EMPLOYEE_LNAME,EMPLOYEE_SDATE, EMPLOYEE_EMAIL);
+        homePage.createUser().editFName(EMPLOYEE_FNAME).editLName(EMPLOYEE_LNAME).editEmail(EMPLOYEE_EMAIL).editStartDate(EMPLOYEE_SDATE).submitForm();
         assertTrue(homePage.isEmployeePresented(EMPLOYEE_FNAME,EMPLOYEE_LNAME));
     }
 
     @Test
     public void deleteEmployee () {
         homePage = homePage.deleteUser(EMPLOYEE_FNAME,EMPLOYEE_LNAME);
+        logOut();
+        logIn();
         assertFalse(homePage.isEmployeePresented(EMPLOYEE_FNAME,EMPLOYEE_LNAME));
     }
 
 
     @Test
     public void editEmployeeDetails () {
-        homePage = homePage.editUser(EMPLOYEE_FNAME,EMPLOYEE_LNAME, EDITEDEMPLOYEE_FNAME,EDITEDEMPLOYEE_LNAME,EDITEDEMPLOYEE_SDATE, EDITEDEMPLOYEE_EMAIL );
-        assertTrue(homePage.assertEmployeeData(EDITEDEMPLOYEE_FNAME,EDITEDEMPLOYEE_LNAME,EDITEDEMPLOYEE_SDATE, EDITEDEMPLOYEE_EMAIL));
+        homePage.editUser(EMPLOYEE_FNAME,EMPLOYEE_LNAME).editFName(EDITEDEMPLOYEE_FNAME).editLName(EDITEDEMPLOYEE_LNAME).editStartDate(EDITEDEMPLOYEE_SDATE).editEmail(EDITEDEMPLOYEE_EMAIL).submitForm();
+        openUser(EDITEDEMPLOYEE_FNAME,EDITEDEMPLOYEE_LNAME);
+        assertTrue(CRUDPage.assertFName(EDITEDEMPLOYEE_FNAME)&& assertLName(EDITEDEMPLOYEE_LNAME)&&assertStartDate(EDITEDEMPLOYEE_SDATE)&&assertEmail(EDITEDEMPLOYEE_EMAIL));
         homePage.deleteUser();
     }
 
